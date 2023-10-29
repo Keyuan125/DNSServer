@@ -109,8 +109,8 @@ def run_dns_server():
                     for pref, server in answer_data:
                         rdata_list.append(MX(dns.rdataclass.IN, dns.rdatatype.MX, pref, server))
                 elif qtype == dns.rdatatype.SOA:
-                    A, AAAA, MX, CNAME, NS, TXT, SOA = answer_data # What is the record format? See dns_records dictionary. Assume we handle @, Class, TTL elsewhere. Do some research on SOA Records
-                    rdata = SOA(dns.rdataclass.IN, dns.rdatatype.SOA, A, AAAA, MX, CNAME, NS, TXT, SOA) # follow format from previous line
+                    a, aaaa, mx, cname, ns, txt, soa = answer_data # What is the record format? See dns_records dictionary. Assume we handle @, Class, TTL elsewhere. Do some research on SOA Records
+                    rdata = SOA(dns.rdataclass.IN, dns.rdatatype.SOA, a, aaaa, mx, cname, ns, txt, soa) # follow format from previous line
                     rdata_list.append(rdata)
                 else:
                     if isinstance(answer_data, str):
