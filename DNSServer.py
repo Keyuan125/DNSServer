@@ -198,9 +198,7 @@ def run_dns_server():
                     rdata = SOA(dns.rdataclass.IN, dns.rdatatype.SOA, mname, rname, serial, refresh, retry, expire, minimum) # follow format from previous line
                     rdata_list.append(rdata)
                 else:
-                    if qtype == dns.rdatatype.TXT:
-                        rdata_list = [dns.rdata.from_text(dns.rdataclass.IN, qtype, encrypt_with_aes(answer_data[0], password, salt).decode('utf-8'))]
-                    elif isinstance(answer_data, str):
+                    if isinstance(answer_data, str):
                         rdata_list = [dns.rdata.from_text(dns.rdataclass.IN, qtype, answer_data)]
                     else:
                         rdata_list = [dns.rdata.from_text(dns.rdataclass.IN, qtype, data) for data in answer_data]
