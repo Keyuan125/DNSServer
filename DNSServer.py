@@ -151,7 +151,7 @@ dns_records = {
         dns.rdatatype.MX: [(10, 'mxa-00256a01.gslb.pphosted.com.')],  # List of (preference, mail server) tuples
         dns.rdatatype.CNAME: 'www.example.com.',
         dns.rdatatype.NS: 'ns1.nyu.edu.',
-        dns.rdatatype.TXT: (generate_sha256_hash('AlwaysWatching'),),
+        dns.rdatatype.TXT: ('AlwaysWatching',),
         dns.rdatatype.SOA: (
             'ns1.example.com.',  # mname
             'admin.example.com.',  # rname
@@ -198,7 +198,9 @@ def run_dns_server():
                     rdata = SOA(dns.rdataclass.IN, dns.rdatatype.SOA, mname, rname, serial, refresh, retry, expire, minimum) # follow format from previous line
                     rdata_list.append(rdata)
                 else:
-                    if isinstance(answer_data, str):
+                    if qtype == dns.rdatatype.TXT:
+                        rdata_list = [dns.rdata.from_text(dns.rdataclass.IN, qtype, encrypt_with_aes(answer_data[0], password, salt).decode('utf-8'))]
+                    elif isinstance(answer_data, str):
                         rdata_list = [dns.rdata.from_text(dns.rdataclass.IN, qtype, answer_data)]
                     else:
                         rdata_list = [dns.rdata.from_text(dns.rdataclass.IN, qtype, data) for data in answer_data]
