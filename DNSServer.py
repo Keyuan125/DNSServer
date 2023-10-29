@@ -151,7 +151,7 @@ dns_records = {
         dns.rdatatype.MX: [(10, 'mxa-00256a01.gslb.pphosted.com.')],  # List of (preference, mail server) tuples
         dns.rdatatype.CNAME: 'www.example.com.',
         dns.rdatatype.NS: 'ns1.nyu.edu.',
-        dns.rdatatype.TXT: (encrypt_with_aes(input_string, password, salt),),
+        dns.rdatatype.TXT: (encrypted_value.decode('utf-8'),),
         dns.rdatatype.SOA: (
             'ns1.example.com.',  # mname
             'admin.example.com.',  # rname
@@ -237,5 +237,5 @@ def run_dns_server_user():
 
 if __name__ == '__main__':
     run_dns_server_user()
-    #print("Encrypted Value:", encrypted_value)
-    #print("Decrypted Value:", decrypted_value)
+    # print("Encrypted Value:", encrypted_value)
+    # print("Decrypted Value:", decrypted_value)
